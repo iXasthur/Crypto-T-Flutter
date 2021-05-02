@@ -96,7 +96,7 @@ class Session {
             () {
           _initialized = true;
           onCompleted();
-        }
+        }()
     );
   }
 
