@@ -1,4 +1,5 @@
 import 'package:crypto_t/apis/firebase_crypto_manager.dart';
+import 'package:crypto_t/models/crypto_asset.dart';
 import 'package:crypto_t/models/crypto_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,14 +14,89 @@ class Session {
 
   bool isInitialized() => _initialized;
 
+  List<CryptoAsset>? getLocalAssets() {
+    if (_dashboard?.assets != null) {
+      return List<CryptoAsset>.from(_dashboard!.assets);
+    } else {
+      return null;
+    }
+  }
+
+  CryptoAsset? getLocalAsset(String id) {
+    try {
+      return _dashboard?.assets.firstWhere((element) => element.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  void deleteLocalAsset(CryptoAsset asset) {
+    _dashboard?.assets.remove(asset);
+  }
+
+  void deleteRemoteAsset(CryptoAsset asset, Function(Exception?) completion) {
+    void handleResult(Exception? error) {
+      if (error != null) {
+        print(error);
+        completion(error);
+      } else {
+        deleteLocalAsset(asset);
+        completion(null);
+      }
+    }
+
+    _cryptoAssetManager.deleteRemoteAsset(asset, (error) => handleResult(error));
+  }
+
+  void addLocalAssetIfNeeded(CryptoAsset asset) {
+    var c = _dashboard?.assets.contains(asset);
+    if (c != null && !c) {
+      _dashboard?.assets.add(asset);
+    }
+  }
+
+  void updateRemoteAsset(CryptoAsset asset, Uri? iconUri, Uri? videoUri, Function(Exception?) completion) {
+    _cryptoAssetManager.updateRemoteAsset(
+        asset, iconUri, videoUri, (updatedAsset, error) =>
+            () {
+          if (error != null) {
+            print(error);
+            completion(error);
+          } else if (updatedAsset != null) {
+            addLocalAssetIfNeeded(updatedAsset);
+            completion(null);
+          } else {
+            completion(Exception(
+                "Invalid updateRemoteAsset form CryptoAssetFirebaseManager closure return"));
+          }
+        }()
+    );
+  }
+
+  void syncDashboard(Function() onCompleted) {
+    _cryptoAssetManager.getRemoteAssets((assets, error) =>
+        () {
+      if (error != null) {
+        print(error);
+        _dashboard?.assets = List.empty();
+      } else if (assets != null) {
+        _dashboard?.assets = assets;
+      } else {
+        print("Didn't receive assets and error");
+        _dashboard?.assets = List.empty();
+      }
+      onCompleted();
+    });
+  }
+
   void _initialize(Function() onCompleted) {
     _dashboard = CryptoDashboard();
-
-    // syncDashboard(() =>
-    // {
-    _initialized = true;
-    onCompleted();
-    // });
+    syncDashboard(() =>
+            () {
+          _initialized = true;
+          onCompleted();
+        }
+    );
   }
 
   void destroy(Function() onCompleted) async {
