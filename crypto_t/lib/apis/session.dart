@@ -75,18 +75,19 @@ class Session {
 
   void syncDashboard(Function() onCompleted) {
     _cryptoAssetManager.getRemoteAssets((assets, error) =>
-        () {
-      if (error != null) {
-        print(error);
-        _dashboard?.assets = List.empty();
-      } else if (assets != null) {
-        _dashboard?.assets = assets;
-      } else {
-        print("Didn't receive assets and error");
-        _dashboard?.assets = List.empty();
-      }
-      onCompleted();
-    });
+            () {
+          if (error != null) {
+            print(error);
+            _dashboard?.assets = List.empty();
+          } else if (assets != null) {
+            _dashboard?.assets = assets;
+          } else {
+            print("Didn't receive assets and error");
+            _dashboard?.assets = List.empty();
+          }
+          onCompleted();
+        }()
+    );
   }
 
   void _initialize(Function() onCompleted) {
