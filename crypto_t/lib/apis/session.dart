@@ -1,3 +1,4 @@
+import 'package:crypto_t/apis/firebase_crypto_manager.dart';
 import 'package:crypto_t/models/crypto_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -6,9 +7,11 @@ class Session {
 
   static final Session shared = Session._internal();
 
+  FirebaseCryptoManager _cryptoAssetManager = FirebaseCryptoManager();
   CryptoDashboard? _dashboard = null;
-
   bool _initialized = false;
+
+  bool isInitialized() => _initialized;
 
   void _initialize(Function() onCompleted) {
     _dashboard = CryptoDashboard();
@@ -36,35 +39,36 @@ class Session {
     }
   }
 
-  void signUpEmail(
-      String email, String password, Function(Exception?) completion) async {
+  void signUpEmail(String email, String password,
+      Function(Exception?) completion) async {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((_) => handleFirebaseAuthResponse(null, completion),
-            onError: (error) => handleFirebaseAuthResponse(error, completion));
+        onError: (error) => handleFirebaseAuthResponse(error, completion));
   }
 
-  void signInEmail(
-      String email, String password, Function(Exception?) completion) async {
+  void signInEmail(String email, String password,
+      Function(Exception?) completion) async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((_) => {handleFirebaseAuthResponse(null, completion)},
-            onError: (error) =>
-                {handleFirebaseAuthResponse(error, completion)});
+        onError: (error) =>
+        {handleFirebaseAuthResponse(error, completion)});
   }
 
-  void handleFirebaseAuthResponse(
-      Exception? error, Function(Exception? error) completion) {
+  void handleFirebaseAuthResponse(Exception? error,
+      Function(Exception? error) completion) {
     if (error != null) {
       completion(error);
       return;
     }
 
-    _initialize(() => {
-          if (_initialized)
-            {completion(null)}
-          else
-            {completion(new Exception("Unable to initialize session"))}
-        });
+    _initialize(() =>
+    {
+      if (_initialized)
+        {completion(null)}
+      else
+        {completion(new Exception("Unable to initialize session"))}
+    });
   }
 }
