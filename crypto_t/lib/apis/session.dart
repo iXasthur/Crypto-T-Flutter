@@ -43,17 +43,16 @@ class Session {
       Function(Exception?) completion) async {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => handleFirebaseAuthResponse(null, completion),
-        onError: (error) => handleFirebaseAuthResponse(error, completion));
+        .then((_) => handleFirebaseAuthResponse(null, completion))
+        .catchError((error) => handleFirebaseAuthResponse(error, completion));
   }
 
   void signInEmail(String email, String password,
       Function(Exception?) completion) async {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((_) => {handleFirebaseAuthResponse(null, completion)},
-        onError: (error) =>
-        {handleFirebaseAuthResponse(error, completion)});
+        .then((_) => handleFirebaseAuthResponse(null, completion))
+        .catchError((error) => handleFirebaseAuthResponse(error, completion));
   }
 
   void handleFirebaseAuthResponse(Exception? error,
@@ -66,9 +65,9 @@ class Session {
     _initialize(() =>
     {
       if (_initialized)
-        {completion(null)}
+        completion(null)
       else
-        {completion(new Exception("Unable to initialize session"))}
+        completion(new Exception("Unable to initialize session"))
     });
   }
 }

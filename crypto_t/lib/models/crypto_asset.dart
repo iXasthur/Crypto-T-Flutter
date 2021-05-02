@@ -1,6 +1,12 @@
+import 'package:uuid/uuid.dart';
+
 import 'cloud_file_data.dart';
 import 'crypto_event.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'crypto_asset.g.dart';
+
+@JsonSerializable(includeIfNull: true)
 class CryptoAsset {
 
   String id;
@@ -20,5 +26,9 @@ class CryptoAsset {
       this.videoFileData,
       this.suggestedEvent
       );
+
+
+  factory CryptoAsset.fromJson(Map<String, dynamic> json) => _$CryptoAssetFromJson(json);
+  Map<String, dynamic> toJson() => _$CryptoAssetToJson(this);
 
 }
