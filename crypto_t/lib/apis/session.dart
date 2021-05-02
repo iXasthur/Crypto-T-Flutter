@@ -56,48 +56,50 @@ class Session {
   }
 
   void updateRemoteAsset(CryptoAsset asset, Uri? iconUri, Uri? videoUri, Function(Exception?) completion) {
+    void completed(CryptoAsset? updatedAsset, Exception? error) {
+      if (error != null) {
+        print(error);
+        completion(error);
+      } else if (updatedAsset != null) {
+        addLocalAssetIfNeeded(updatedAsset);
+        completion(null);
+      } else {
+        completion(Exception(
+            "Invalid updateRemoteAsset form CryptoAssetFirebaseManager closure return"));
+      }
+    }
+
     _cryptoAssetManager.updateRemoteAsset(
         asset, iconUri, videoUri, (updatedAsset, error) =>
-            () {
-          if (error != null) {
-            print(error);
-            completion(error);
-          } else if (updatedAsset != null) {
-            addLocalAssetIfNeeded(updatedAsset);
-            completion(null);
-          } else {
-            completion(Exception(
-                "Invalid updateRemoteAsset form CryptoAssetFirebaseManager closure return"));
-          }
-        }()
-    );
+        completed(updatedAsset, error));
   }
 
   void syncDashboard(Function() onCompleted) {
+    void completed(List<CryptoAsset>? assets, Exception? error) {
+      if (error != null) {
+        print(error);
+        _dashboard?.assets = List.empty();
+      } else if (assets != null) {
+        _dashboard?.assets = assets;
+      } else {
+        print("Didn't receive assets and error");
+        _dashboard?.assets = List.empty();
+      }
+      onCompleted();
+    }
+
     _cryptoAssetManager.getRemoteAssets((assets, error) =>
-            () {
-          if (error != null) {
-            print(error);
-            _dashboard?.assets = List.empty();
-          } else if (assets != null) {
-            _dashboard?.assets = assets;
-          } else {
-            print("Didn't receive assets and error");
-            _dashboard?.assets = List.empty();
-          }
-          onCompleted();
-        }()
-    );
+        completed(assets, error));
   }
 
   void _initialize(Function() onCompleted) {
+    void completed() {
+      _initialized = true;
+      onCompleted();
+    }
+
     _dashboard = CryptoDashboard();
-    syncDashboard(() =>
-            () {
-          _initialized = true;
-          onCompleted();
-        }()
-    );
+    syncDashboard(() => completed());
   }
 
   void destroy(Function() onCompleted) async {

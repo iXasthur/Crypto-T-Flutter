@@ -140,14 +140,16 @@ class FirebaseCryptoManager {
       // Upload new file with recursive call in completion
       if (videoUri != null) {
         var file = File.fromUri(videoUri);
-        uploadVideo(file, (fileData, error) =>
-        fileData != null
-            ? () {
-          asset.videoFileData = fileData;
-          var downloadUri = Uri.parse(fileData.downloadURL);
-          updateRemoteAssetRec(asset, iconUri, downloadUri, completion);
-        }()
-            : updateRemoteAssetRec(asset, iconUri, null, completion));
+        uploadVideo(file, (fileData, error) {
+          if (fileData != null) {
+            asset.videoFileData = fileData;
+            var downloadUri = Uri.parse(fileData.downloadURL);
+            updateRemoteAssetRec(asset, iconUri, downloadUri, completion);
+          } else {
+            updateRemoteAssetRec(asset, iconUri, null, completion);
+          }
+        }
+        );
       } else {
         updateRemoteAssetRec(asset, iconUri, videoUri, completion);
       }
@@ -175,14 +177,16 @@ class FirebaseCryptoManager {
       // Upload new file with recursive call in completion
       if (iconUri != null) {
         var file = File.fromUri(iconUri);
-        uploadImage(file, (fileData, error) =>
-        fileData != null
-            ? () {
-          asset.iconFileData = fileData;
-          var downloadUri = Uri.parse(fileData.downloadURL);
-          updateRemoteAssetRec(asset, downloadUri, videoUri, completion);
-        }()
-            : updateRemoteAssetRec(asset, null, videoUri, completion));
+        uploadImage(file, (fileData, error) {
+          if (fileData != null) {
+            asset.iconFileData = fileData;
+            var downloadUri = Uri.parse(fileData.downloadURL);
+            updateRemoteAssetRec(asset, downloadUri, videoUri, completion);
+          } else {
+            updateRemoteAssetRec(asset, null, videoUri, completion);
+          }
+        }
+        );
       } else {
         updateRemoteAssetRec(asset, iconUri, videoUri, completion);
       }
