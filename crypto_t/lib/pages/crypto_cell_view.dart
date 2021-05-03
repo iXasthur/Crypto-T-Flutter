@@ -37,8 +37,20 @@ class _CryptoCellState extends State<CryptoCell> {
             : Icon(CupertinoIcons.cube, size: 40),
         ),
         SizedBox(height: 5),
-        Text(widget.asset.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-        Text(widget.asset.code, maxLines: 1, overflow: TextOverflow.ellipsis),
+        Text(
+            widget.asset.name,
+            maxLines: 1,
+            overflow:
+            TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+        ),
+        Text(
+            widget.asset.code,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+        ),
       ],
     );
   }

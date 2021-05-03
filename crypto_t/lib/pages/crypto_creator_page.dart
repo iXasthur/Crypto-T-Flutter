@@ -1,3 +1,4 @@
+import 'package:crypto_t/apis/session.dart';
 import 'package:crypto_t/models/crypto_asset.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
@@ -5,11 +6,13 @@ import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:crypto_t/utils/widget/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class CryptoCreator extends StatefulWidget {
   final CryptoAsset? asset;
+  final Function? onCompleted;
 
-  const CryptoCreator({Key? key, this.asset}) : super(key: key);
+  const CryptoCreator({Key? key, this.asset, this.onCompleted}) : super(key: key);
 
   @override
   _CryptoCreatorState createState() => _CryptoCreatorState();
@@ -44,7 +47,36 @@ class _CryptoCreatorState extends State<CryptoCreator> {
         actions: [
           IconButton(
             onPressed: () {
+              var name = _nameController.text.trim();
+              var code = _codeController.text.trim();
+              var description = _descriptionController.text.trim();
+              if (name.length > 2 && code.length > 2) {
+                var newAsset = CryptoAsset(
+                    Uuid().v4(),
+                    name, 
+                    code, 
+                    description,
+                    null,
+                    null,
+                    null,
+                );
 
+                // Uri? newIconUri;
+                // Uri? newVideoUri;
+                
+                Session.shared.updateRemoteAsset(newAsset, null, null, (error) {
+                  if (error == null) {
+                    if (widget.onCompleted != null) {
+                      widget.onCompleted!();
+                    }
+                    Navigator.pop(context);
+                  } else {
+                    print(error);
+                  }
+                });
+              } else {
+                print('Input is invalid');
+              }
             },
             icon: Icon(CupertinoIcons.checkmark_alt),
             splashColor: Colors.transparent,

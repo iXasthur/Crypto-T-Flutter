@@ -12,10 +12,12 @@ class CryptosPage extends StatefulWidget {
 
 class _CryptosPageState extends State<CryptosPage> {
 
-  List<CryptoAsset> _assets = Session.shared.getLocalAssets() ?? [];
+  List<CryptoAsset> _assets = [];
 
   @override
   Widget build(BuildContext context) {
+    _assets = Session.shared.getLocalAssets() ?? [];
+
     return GridView.count(
       crossAxisCount: 3,
       padding: EdgeInsets.fromLTRB(
