@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:crypto_t/apis/session.dart';
 import 'package:crypto_t/models/crypto_asset.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
@@ -7,31 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:video_player/video_player.dart';
 
-class CryptoDetailsPage extends StatefulWidget {
-  final CryptoAsset asset;
+import 'app_routes.dart';
 
-  const CryptoDetailsPage({Key? key, required this.asset}) : super(key: key);
+class CryptoDetailsPage extends StatefulWidget {
+  final String assetId;
+
+  const CryptoDetailsPage({Key? key, required this.assetId}) : super(key: key);
 
   @override
   _CryptoDetailsPageState createState() => _CryptoDetailsPageState();
 }
 
 class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
-  VideoPlayerController? _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    var videoData = widget.asset.videoFileData;
-    if (videoData != null) {
-      _controller = VideoPlayerController.network(videoData.downloadURL)
-        ..setLooping(true)
-        ..initialize().then((_) {
-          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-          setState(() {});
-        });
-    }
-  }
+  VideoPlayerController? _controller;
+  String? _controllerUrl;
 
   @override
   void dispose() {
@@ -41,18 +32,49 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var imageUrl = widget.asset.iconFileData?.downloadURL;
-    var videoUrl = widget.asset.videoFileData?.downloadURL;
-    var event = widget.asset.suggestedEvent;
+    var asset = Session.shared.getLocalAsset(widget.assetId);
+
+    if (asset == null) {
+      return Scaffold(
+        appBar: MyAppBar.createWithAutoBack(context, title: 'Invalid asset', onBack: () {}),
+      );
+    }
+
+    var imageUrl = asset.iconFileData?.downloadURL;
+    var videoUrl = asset.videoFileData?.downloadURL;
+    var event = asset.suggestedEvent;
+
+    if (videoUrl != _controllerUrl) {
+      if (videoUrl == null) {
+        _controller?.dispose();
+        _controller = null;
+      } else {
+        var oldVideoController = _controller;
+        _controller = VideoPlayerController.network(videoUrl)
+          ..setLooping(true)
+          ..initialize().then((_) {
+            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+            setState(() {
+              _controllerUrl = videoUrl;
+              oldVideoController?.dispose();
+            });
+          });
+      }
+    }
 
     return Scaffold(
       appBar: MyAppBar.createWithAutoBack(context,
-          title: widget.asset.name,
+          title: asset.name,
           onBack: () {},
           actions: [
             IconButton(
               onPressed: () {
-                // Go to creator
+                Navigator.pushNamed(context, AppRoutes.creator, arguments: [
+                  asset,
+                      () {
+                    setState(() {});
+                  },
+                ]);
               },
               icon: Icon(CupertinoIcons.pencil),
               splashColor: Colors.transparent,
@@ -91,7 +113,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                   ),
                   SizedBox(width: AppStylesPrimary.safeAreaX),
                   Text(
-                    widget.asset.code,
+                    asset.code,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -100,7 +122,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                   ),
                 ],
               ),
-              widget.asset.description.isNotEmpty
+              asset.description.isNotEmpty
                   ? Column(
                       children: [
                         SizedBox(height: 20),
@@ -123,7 +145,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                               child: Column(
                                 children: [
                                   Text(
-                                    widget.asset.description,
+                                    asset.description,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17,

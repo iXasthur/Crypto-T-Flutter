@@ -40,7 +40,29 @@ class _CryptoCreatorState extends State<CryptoCreator> {
   @override
   void initState() {
     super.initState();
-    // Init image and video uris
+
+    if (widget.asset != null) {
+      _nameController.text = widget.asset!.name;
+      _codeController.text = widget.asset!.code;
+      _descriptionController.text = widget.asset!.description;
+
+      var imageDownloadURL = widget.asset!.iconFileData?.downloadURL;
+      if (imageDownloadURL != null) {
+        _imageUri = Uri.parse(imageDownloadURL);
+      }
+
+      var videoDownloadURL = widget.asset!.videoFileData?.downloadURL;
+      if (videoDownloadURL != null) {
+        _videoUri = Uri.parse(videoDownloadURL);
+        _videoController = VideoPlayerController.network(videoDownloadURL)
+          ..setLooping(true)
+          ..initialize().then((_) {
+            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+            setState(() {});
+          });
+      }
+    }
+
   }
 
   @override
@@ -57,7 +79,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
     return Scaffold(
       appBar: MyAppBar.createWithAutoBack(
         context,
-        title: "New Crypto",
+        title: widget.asset == null ? "New Crypto" : "Edit Crypto",
         onBack: () {
 
         },
@@ -69,7 +91,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               var description = _descriptionController.text.trim();
               if (name.length > 2 && code.length > 2) {
                 var newAsset = CryptoAsset(
-                    Uuid().v4(),
+                    widget.asset?.id ?? Uuid().v4(),
                     name, 
                     code, 
                     description,
@@ -305,11 +327,14 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                         if (pickedFile != null) {
                           _videoUri = File(pickedFile.path).uri;
 
+                          var oldVideoController = _videoController;
                           _videoController = VideoPlayerController.file(File(pickedFile.path))
                             ..setLooping(true)
                             ..initialize().then((_) {
                               // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-                              setState(() {});
+                              setState(() {
+                                oldVideoController?.dispose();
+                              });
                             });
 
                         } else {

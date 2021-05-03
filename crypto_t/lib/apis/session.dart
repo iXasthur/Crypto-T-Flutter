@@ -48,10 +48,14 @@ class Session {
     _cryptoAssetManager.deleteRemoteAsset(asset, (error) => handleResult(error));
   }
 
-  void addLocalAssetIfNeeded(CryptoAsset asset) {
-    var c = _dashboard?.assets.contains(asset);
-    if (c != null && !c) {
-      _dashboard?.assets.add(asset);
+  void updateLocalAsset(CryptoAsset asset) { // ???
+    var i = _dashboard?.assets.indexWhere((element) => element.id == asset.id);
+    if (i != null) {
+      if (i > -1) {
+        _dashboard?.assets[i] = asset;
+      } else {
+        _dashboard?.assets.add(asset);
+      }
     }
   }
 
@@ -61,7 +65,7 @@ class Session {
         print(error);
         completion(error);
       } else if (updatedAsset != null) {
-        addLocalAssetIfNeeded(updatedAsset);
+        updateLocalAsset(updatedAsset);
         completion(null);
       } else {
         completion(Exception(

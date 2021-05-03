@@ -30,8 +30,8 @@ class AppRoutes {
       case home:
         return MaterialPageRoute(builder: (_) => HomeScaffold());
       case details:
-        if (args is CryptoAsset) {
-          return MaterialPageRoute(builder: (_) => CryptoDetailsPage(asset: args));
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => CryptoDetailsPage(assetId: args));
         }
         break;
       case creator:
