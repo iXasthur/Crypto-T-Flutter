@@ -14,7 +14,7 @@ class _SettingsPageState extends State<SettingsPage> {
       padding: EdgeInsets.fromLTRB(
         AppStylesPrimary.safeAreaX,
         AppStylesPrimary.safeAreaYTop,
-        AppStylesPrimary.safeAreaX, 
+        AppStylesPrimary.safeAreaX,
         0,
       ),
       child: Column(
