@@ -5,6 +5,7 @@ class AppStylesPrimary {
   static final String title = 'Crypto-T-Flutter';
 
   static final double safeAreaX = 28;
+  static final double safeAreaYTop = 15;
 
   static final ThemeData main = ThemeData(
     primarySwatch: Colors.purple,

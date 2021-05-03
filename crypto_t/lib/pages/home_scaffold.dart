@@ -1,3 +1,4 @@
+import 'package:crypto_t/pages/settings_page.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
   List<Widget> _widgetOptions = <Widget>[
     Container(),
     Container(),
-    Container(),
+    SettingsPage(),
   ];
 
   @override
