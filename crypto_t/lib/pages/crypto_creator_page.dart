@@ -73,6 +73,52 @@ class _CryptoCreatorState extends State<CryptoCreator> {
     super.dispose();
   }
 
+  Widget _deleteButton() => IconButton(
+    onPressed: () {
+      Session.shared.deleteRemoteAsset(widget.asset!, (error) {
+        if (error == null) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        } else {
+          print(error);
+        }
+      });
+    },
+    icon: Icon(CupertinoIcons.xmark),
+    splashColor: Colors.transparent,
+  );
+
+  Widget _saveButton() => IconButton(
+    onPressed: () {
+      var name = _nameController.text.trim();
+      var code = _codeController.text.trim();
+      var description = _descriptionController.text.trim();
+      if (name.length > 2 && code.length > 2) {
+        var newAsset = CryptoAsset(
+          widget.asset?.id ?? Uuid().v4(),
+          name,
+          code,
+          description,
+          widget.asset?.iconFileData,
+          widget.asset?.videoFileData,
+          widget.asset?.suggestedEvent,
+        );
+
+        Session.shared.updateRemoteAsset(newAsset, _imageUri, _videoUri, (error) {
+          if (error == null) {
+            Navigator.pop(context);
+          } else {
+            print(error);
+          }
+        });
+      } else {
+        print('Input is invalid');
+      }
+    },
+    icon: Icon(CupertinoIcons.checkmark_alt),
+    splashColor: Colors.transparent,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,38 +128,9 @@ class _CryptoCreatorState extends State<CryptoCreator> {
         onBack: () {
 
         },
-        actions: [
-          IconButton(
-            onPressed: () {
-              var name = _nameController.text.trim();
-              var code = _codeController.text.trim();
-              var description = _descriptionController.text.trim();
-              if (name.length > 2 && code.length > 2) {
-                var newAsset = CryptoAsset(
-                    widget.asset?.id ?? Uuid().v4(),
-                    name, 
-                    code, 
-                    description,
-                    widget.asset?.iconFileData,
-                    widget.asset?.videoFileData,
-                    widget.asset?.suggestedEvent,
-                );
-                
-                Session.shared.updateRemoteAsset(newAsset, _imageUri, _videoUri, (error) {
-                  if (error == null) {
-                    Navigator.pop(context);
-                  } else {
-                    print(error);
-                  }
-                });
-              } else {
-                print('Input is invalid');
-              }
-            },
-            icon: Icon(CupertinoIcons.checkmark_alt),
-            splashColor: Colors.transparent,
-          ),
-        ],
+        actions: widget.asset != null
+        ? [_deleteButton(), _saveButton()] 
+        : [_saveButton()],
       ),
       body: SingleChildScrollView(
         child: Padding(
