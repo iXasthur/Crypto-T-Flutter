@@ -28,6 +28,12 @@ class _CryptoCreatorState extends State<CryptoCreator> {
   Uri? _localVideo;
 
   @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _codeController.dispose();
