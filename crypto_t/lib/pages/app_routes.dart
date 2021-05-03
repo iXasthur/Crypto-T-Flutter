@@ -1,4 +1,7 @@
+import 'package:crypto_t/models/crypto_asset.dart';
 import 'package:crypto_t/pages/auth_scaffold.dart';
+import 'package:crypto_t/pages/crypto_creator_page.dart';
+import 'package:crypto_t/pages/crypto_details_page.dart';
 import 'package:crypto_t/pages/loading_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +27,17 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => LoadingScaffold());
       case auth:
         return MaterialPageRoute(builder: (_) => AuthScaffold());
-      case home:
-        return MaterialPageRoute(builder: (_) => HomeScaffold());
+      case details:
+        if (args is CryptoAsset) {
+          return MaterialPageRoute(builder: (_) => CryptoDetailsPage(asset: args));
+        }
+        break;
+      case creator:
+        if (args is CryptoAsset) {
+          return MaterialPageRoute(builder: (_) => CryptoCreator(asset: args));
+        } else {
+          return MaterialPageRoute(builder: (_) => CryptoCreator());
+        }
     }
 
     return _errorRoute();
