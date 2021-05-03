@@ -135,6 +135,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                         child: Container(
                           color: Colors.deepPurpleAccent,
                           height: 150,
+                          child: Container(),
                         ),
                       ),
                     ],
