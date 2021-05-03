@@ -16,21 +16,33 @@ class _CryptosPageState extends State<CryptosPage> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      // Create a grid with 2 columns. If you change the scrollDirection to
-      // horizontal, this produces 2 rows.
       crossAxisCount: 3,
       padding: EdgeInsets.fromLTRB(
-        AppStylesPrimary.safeAreaX,
+        AppStylesPrimary.safeAreaX/2,
         0,
-        AppStylesPrimary.safeAreaX,
+        AppStylesPrimary.safeAreaX/2,
         0,
       ),
-      // Generate 100 widgets that display their index in the List.
       children: List.generate(_assets.length, (index) {
         var item = _assets[index];
 
-        return Center(
-          child: CryptoCell(asset: item),
+        return Padding(
+          padding: EdgeInsets.all(2),
+          child: ElevatedButton(
+              onPressed: () {
+                // Go to detailed
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).scaffoldBackgroundColor, // background
+                onPrimary: Theme.of(context).textTheme.bodyText1!.color, // foreground
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              child: Center(
+                child: CryptoCell(asset: item),
+              )),
         );
       }),
     );
