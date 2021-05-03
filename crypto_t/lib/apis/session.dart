@@ -9,7 +9,7 @@ class Session {
   static final Session shared = Session._internal();
 
   FirebaseCryptoManager _cryptoAssetManager = FirebaseCryptoManager();
-  CryptoDashboard? _dashboard = null;
+  CryptoDashboard? _dashboard;
   bool _initialized = false;
 
   bool isInitialized() => _initialized;

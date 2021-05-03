@@ -168,7 +168,7 @@ class FirebaseCryptoManager {
             iconFileData.downloadURL
         );
         asset.iconFileData = null;
-        deleteFile(iconFileData, (error) =>
+        deleteFile(iconFileDataCopy, (error) =>
         error == null
             ? print("Deleted image with path " + iconFileData.path)
             : print(error));

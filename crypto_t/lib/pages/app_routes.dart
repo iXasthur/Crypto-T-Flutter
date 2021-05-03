@@ -27,6 +27,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => LoadingScaffold());
       case auth:
         return MaterialPageRoute(builder: (_) => AuthScaffold());
+      case home:
+        return MaterialPageRoute(builder: (_) => HomeScaffold());
       case details:
         if (args is CryptoAsset) {
           return MaterialPageRoute(builder: (_) => CryptoDetailsPage(asset: args));

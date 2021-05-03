@@ -1,5 +1,6 @@
 import 'package:crypto_t/apis/session.dart';
 import 'package:crypto_t/models/crypto_asset.dart';
+import 'package:crypto_t/pages/app_routes.dart';
 import 'package:crypto_t/pages/crypto_cell_view.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _CryptosPageState extends State<CryptosPage> {
           padding: EdgeInsets.all(2),
           child: ElevatedButton(
               onPressed: () {
-                // Go to detailed
+                Navigator.pushNamed(context, AppRoutes.details, arguments: item);
               },
               style: ElevatedButton.styleFrom(
                 primary: Theme.of(context).scaffoldBackgroundColor, // background

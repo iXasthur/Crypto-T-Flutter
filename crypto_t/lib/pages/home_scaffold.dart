@@ -31,15 +31,17 @@ class _HomeScaffoldState extends State<HomeScaffold> {
       appBar: MyAppBar.create(
         context,
         title: titles[_selectedIndex],
-        actions: [
-          IconButton(
-            onPressed: () {
-                // Go to creator
-            },
-            icon: Icon(CupertinoIcons.plus),
-            splashColor: Colors.transparent,
-          ),
-        ],
+        actions: _selectedIndex == 0
+        ? [
+        IconButton(
+          onPressed: () {
+            // Go to creator
+          },
+          icon: Icon(CupertinoIcons.plus),
+          splashColor: Colors.transparent,
+        ),
+        ]
+        : [],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: Container(
