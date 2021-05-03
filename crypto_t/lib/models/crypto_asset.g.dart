@@ -34,7 +34,7 @@ Map<String, dynamic> _$CryptoAssetToJson(CryptoAsset instance) =>
       'name': instance.name,
       'code': instance.code,
       'description': instance.description,
-      'iconFileData': instance.iconFileData,
-      'videoFileData': instance.videoFileData,
-      'suggestedEvent': instance.suggestedEvent,
+      'iconFileData': instance.iconFileData?.toJson(),
+      'videoFileData': instance.videoFileData?.toJson(),
+      'suggestedEvent': instance.suggestedEvent?.toJson(),
     };

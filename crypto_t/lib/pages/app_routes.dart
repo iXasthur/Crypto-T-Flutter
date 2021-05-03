@@ -35,7 +35,6 @@ class AppRoutes {
         }
         break;
       case creator:
-        print(args);
         if (args is List && args[1] is Function) {
           if ((args[0] is CryptoAsset?) || (args[1] is Function)) {
             return MaterialPageRoute(builder: (_) => CryptoCreator(

@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'crypto_asset.g.dart';
 
-@JsonSerializable(includeIfNull: true)
+@JsonSerializable(includeIfNull: true, explicitToJson: true)
 class CryptoAsset {
 
   String id;
