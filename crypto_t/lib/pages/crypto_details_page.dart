@@ -81,7 +81,8 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                           child: CachedNetworkImage(
                             imageUrl: imageUrl,
                             placeholder: (context, url) => SpinKitDoubleBounce(
-                                color: Colors.amber, size: 100),
+                                color: Colors.amber,
+                            ),
                             errorWidget: (context, url, error) =>
                                 Icon(CupertinoIcons.cube, size: 100),
                           ),
