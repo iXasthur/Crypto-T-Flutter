@@ -1,3 +1,5 @@
+import 'package:crypto_t/pages/cryptos_page.dart';
+import 'package:crypto_t/pages/map_page.dart';
 import 'package:crypto_t/pages/settings_page.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,8 +20,8 @@ class _HomeScaffoldState extends State<HomeScaffold> {
   int _selectedIndex = 0;
 
   List<Widget> _widgetOptions = <Widget>[
-    Container(),
-    Container(),
+    CryptosPage(),
+    MapPage(),
     SettingsPage(),
   ];
 
