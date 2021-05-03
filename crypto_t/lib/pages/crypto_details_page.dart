@@ -5,6 +5,7 @@ import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:video_player/video_player.dart';
 
 class CryptoDetailsPage extends StatefulWidget {
   final CryptoAsset asset;
@@ -16,6 +17,29 @@ class CryptoDetailsPage extends StatefulWidget {
 }
 
 class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
+
+  VideoPlayerController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    var videoData = widget.asset.videoFileData;
+    if (videoData != null) {
+      _controller = VideoPlayerController.network(
+          videoData.downloadURL)
+        ..initialize().then((_) {
+          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+          setState(() {});
+        });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var imageUrl = widget.asset.iconFileData?.downloadURL;
@@ -132,10 +156,13 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                       SizedBox(height: 10),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          color: Colors.deepPurpleAccent,
-                          height: 150,
-                          child: Container(),
+                        child: Center(
+                          child: _controller?.value.isInitialized ?? false
+                              ? AspectRatio(
+                                  aspectRatio: 16.0/9.0,
+                                  child: VideoPlayer(_controller!),
+                                )
+                              : SpinKitDoubleBounce(color: Colors.purple),
                         ),
                       ),
                     ],
