@@ -58,217 +58,220 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
               splashColor: Colors.transparent,
             ),
           ]),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          AppStylesPrimary.safeAreaX,
-          AppStylesPrimary.safeAreaYTop,
-          AppStylesPrimary.safeAreaX,
-          0,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  child: imageUrl != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(90.0),
-                          // child: Image.network(imageUrl),
-                          child: CachedNetworkImage(
-                            imageUrl: imageUrl,
-                            placeholder: (context, url) => SpinKitDoubleBounce(
-                              color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            AppStylesPrimary.safeAreaX,
+            AppStylesPrimary.safeAreaYTop,
+            AppStylesPrimary.safeAreaX,
+            0,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: imageUrl != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(90.0),
+                            // child: Image.network(imageUrl),
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              placeholder: (context, url) => SpinKitDoubleBounce(
+                                color: Colors.amber,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Icon(CupertinoIcons.cube, size: 100),
                             ),
-                            errorWidget: (context, url, error) =>
-                                Icon(CupertinoIcons.cube, size: 100),
-                          ),
-                        )
-                      : Icon(CupertinoIcons.cube, size: 100),
-                ),
-                SizedBox(width: AppStylesPrimary.safeAreaX),
-                Text(
-                  widget.asset.code,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                          )
+                        : Icon(CupertinoIcons.cube, size: 100),
                   ),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-            widget.asset.description.isNotEmpty
-                ? Column(
-                    children: [
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Text(
-                            "Description",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                  SizedBox(width: AppStylesPrimary.safeAreaX),
+                  Text(
+                    widget.asset.code,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+              widget.asset.description.isNotEmpty
+                  ? Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Text(
+                              "Description",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Column(
-                              children: [
-                                Text(
-                                  widget.asset.description,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    widget.asset.description,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                : Container(),
-            videoUrl != null
-                ? Column(
-                    children: [
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Text(
-                            "Video",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                          ],
+                        ),
+                      ],
+                    )
+                  : Container(),
+              videoUrl != null
+                  ? Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Text(
+                              "Video",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Center(
-                              child: _controller?.value.isInitialized ?? false
-                                  ? AspectRatio(
-                                      aspectRatio: 16.0 / 9.0,
-                                      child: VideoPlayer(_controller!),
-                                    )
-                                  : SpinKitDoubleBounce(color: Colors.purple),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Center(
+                                child: _controller?.value.isInitialized ?? false
+                                    ? AspectRatio(
+                                        aspectRatio: 16.0 / 9.0,
+                                        child: VideoPlayer(_controller!),
+                                      )
+                                    : SpinKitDoubleBounce(color: Colors.purple),
+                              ),
                             ),
-                          ),
-                          _controller?.value.isInitialized ?? false
-                              ? IconButton(
-                                  color: Theme.of(context).scaffoldBackgroundColor,
-                                  onPressed: () {
-                                    var isPlaying =
-                                        _controller?.value.isPlaying;
-                                    if (isPlaying != null) {
-                                      setState(() {
-                                        _controller!.value.isPlaying
-                                            ? _controller!.pause()
-                                            : _controller!.play();
-                                      });
-                                    }
-                                  },
-                                  icon: Icon(
-                                      _controller?.value.isPlaying ?? false
-                                          ? Icons.pause
-                                          : Icons.play_arrow),
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    ],
-                  )
-                : Container(),
-            event != null
-                ? Column(
-                    children: [
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Text(
-                            "Event",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                            _controller?.value.isInitialized ?? false
+                                ? IconButton(
+                                    color: Theme.of(context).scaffoldBackgroundColor,
+                                    onPressed: () {
+                                      var isPlaying =
+                                          _controller?.value.isPlaying;
+                                      if (isPlaying != null) {
+                                        setState(() {
+                                          _controller!.value.isPlaying
+                                              ? _controller!.pause()
+                                              : _controller!.play();
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(
+                                        _controller?.value.isPlaying ?? false
+                                            ? Icons.pause
+                                            : Icons.play_arrow),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Container(),
+              event != null
+                  ? Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Text(
+                              "Event",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Latitude',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Latitude',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                          Text(
-                            event.latitude,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                            Text(
+                              event.latitude,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Longitude',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Longitude',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                          Text(
-                            event.longitude,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                            Text(
+                              event.longitude,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Text(
-                            event.note,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Text(
+                              event.note,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                : Container(),
-          ],
+                          ],
+                        ),
+                      ],
+                    )
+                  : Container(),
+              SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );

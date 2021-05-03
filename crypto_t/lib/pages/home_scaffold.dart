@@ -1,3 +1,4 @@
+import 'package:crypto_t/pages/app_routes.dart';
 import 'package:crypto_t/pages/cryptos_page.dart';
 import 'package:crypto_t/pages/map_page.dart';
 import 'package:crypto_t/pages/settings_page.dart';
@@ -36,6 +37,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
         IconButton(
           onPressed: () {
             // Go to creator
+            Navigator.pushNamed(context, AppRoutes.creator);
           },
           icon: Icon(CupertinoIcons.plus),
           splashColor: Colors.transparent,

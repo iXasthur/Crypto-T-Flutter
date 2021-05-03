@@ -20,9 +20,10 @@ class _AuthScaffoldState extends State<AuthScaffold> {
 
   @override
   void initState() {
+    super.initState();
+
     _emailController.text = "api@example.com";
     _passwordController.text = "123456";
-    super.initState();
 
     Future(() {
       var email = _emailController.text.trim();
