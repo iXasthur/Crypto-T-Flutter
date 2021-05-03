@@ -206,7 +206,7 @@ class FirebaseCryptoManager {
 
   void getRemoteAssets(Function(List<CryptoAsset>?, Exception?) completion) {
     void parseSnapshot(QuerySnapshot value, Function(List<CryptoAsset>?, Exception?) completion) {
-      var assets = List<CryptoAsset>.empty();
+      var assets = List<CryptoAsset>.empty(growable: true);
 
       value.docs.forEach((element) {
         var data = element.data();

@@ -6,7 +6,7 @@ part 'crypto_dashboard.g.dart';
 @JsonSerializable()
 class CryptoDashboard {
 
-  List<CryptoAsset> assets = List.empty();
+  List<CryptoAsset> assets = List.empty(growable: true);
 
   CryptoDashboard();
 

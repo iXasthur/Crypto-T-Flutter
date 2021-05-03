@@ -1,3 +1,4 @@
+import 'package:crypto_t/apis/session.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
@@ -17,6 +18,13 @@ class _AuthScaffoldState extends State<AuthScaffold> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    _emailController.text = "api@example.com";
+    _passwordController.text = "123456";
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -24,6 +32,9 @@ class _AuthScaffoldState extends State<AuthScaffold> {
   }
 
   bool validateInput() {
+    if (_emailController.text.length > 2 && _passwordController.text.length > 5) {
+      return true;
+    }
     return false;
   }
 
@@ -58,7 +69,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                 _emailController,
                 hint: 'Email',
                 onChanged: (s) {
-                  print(s);
+                  setState(() {});
                 },
               ),
               SizedBox(height: 15),
@@ -67,7 +78,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                 _passwordController,
                 hint: 'Password',
                 onChanged: (s) {
-                  print(s);
+                  setState(() {});
                 },
               ),
               SizedBox(height: 15),
@@ -77,7 +88,13 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                     context,
                     title: 'Sign In',
                     onTap: validateInput()
-                        ? () {}
+                        ? () {
+                          var email = _emailController.text.trim();
+                          var password = _passwordController.text.trim();
+                          Session.shared.signInEmail(email, password, (error) {
+                            print(error);
+                          });
+                        }
                         : null,
                   ),
                   SizedBox(width: 15),
@@ -85,7 +102,13 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                     context,
                     title: 'Sign Up',
                     onTap: validateInput()
-                        ? () {}
+                        ? () {
+                          var email = _emailController.text.trim();
+                          var password = _passwordController.text.trim();
+                          Session.shared.signUpEmail(email, password, (error) {
+                            print(error);
+                          });
+                        }
                         : null,
                   ),
                 ],

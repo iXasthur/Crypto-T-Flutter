@@ -78,12 +78,12 @@ class Session {
     void completed(List<CryptoAsset>? assets, Exception? error) {
       if (error != null) {
         print(error);
-        _dashboard?.assets = List.empty();
+        _dashboard?.assets = List.empty(growable: true);
       } else if (assets != null) {
         _dashboard?.assets = assets;
       } else {
         print("Didn't receive assets and error");
-        _dashboard?.assets = List.empty();
+        _dashboard?.assets = List.empty(growable: true);
       }
       onCompleted();
     }
