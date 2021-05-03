@@ -17,7 +17,6 @@ class CryptoDetailsPage extends StatefulWidget {
 }
 
 class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
-
   VideoPlayerController? _controller;
 
   @override
@@ -25,8 +24,8 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
     super.initState();
     var videoData = widget.asset.videoFileData;
     if (videoData != null) {
-      _controller = VideoPlayerController.network(
-          videoData.downloadURL)
+      _controller = VideoPlayerController.network(videoData.downloadURL)
+        ..setLooping(true)
         ..initialize().then((_) {
           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
           setState(() {});
@@ -81,7 +80,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                           child: CachedNetworkImage(
                             imageUrl: imageUrl,
                             placeholder: (context, url) => SpinKitDoubleBounce(
-                                color: Colors.amber,
+                              color: Colors.amber,
                             ),
                             errorWidget: (context, url, error) =>
                                 Icon(CupertinoIcons.cube, size: 100),
@@ -155,16 +154,40 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Center(
-                          child: _controller?.value.isInitialized ?? false
-                              ? AspectRatio(
-                                  aspectRatio: 16.0/9.0,
-                                  child: VideoPlayer(_controller!),
+                      Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Center(
+                              child: _controller?.value.isInitialized ?? false
+                                  ? AspectRatio(
+                                      aspectRatio: 16.0 / 9.0,
+                                      child: VideoPlayer(_controller!),
+                                    )
+                                  : SpinKitDoubleBounce(color: Colors.purple),
+                            ),
+                          ),
+                          _controller?.value.isInitialized ?? false
+                              ? IconButton(
+                                  color: Theme.of(context).scaffoldBackgroundColor,
+                                  onPressed: () {
+                                    var isPlaying =
+                                        _controller?.value.isPlaying;
+                                    if (isPlaying != null) {
+                                      setState(() {
+                                        _controller!.value.isPlaying
+                                            ? _controller!.pause()
+                                            : _controller!.play();
+                                      });
+                                    }
+                                  },
+                                  icon: Icon(
+                                      _controller?.value.isPlaying ?? false
+                                          ? Icons.pause
+                                          : Icons.play_arrow),
                                 )
-                              : SpinKitDoubleBounce(color: Colors.purple),
-                        ),
+                              : Container(),
+                        ],
                       ),
                     ],
                   )
