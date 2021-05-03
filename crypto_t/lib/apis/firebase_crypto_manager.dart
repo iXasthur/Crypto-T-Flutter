@@ -210,8 +210,14 @@ class FirebaseCryptoManager {
 
       value.docs.forEach((element) {
         var data = element.data();
-        var asset = CryptoAsset.fromJson(data);
-        assets.add(asset);
+        try {
+          var asset = CryptoAsset.fromJson(data);
+          assets.add(asset);
+        } catch (e) {
+          print('Error parsing json asset:');
+          print(data);
+          print(e);
+        }
       });
 
       completion(assets, null);

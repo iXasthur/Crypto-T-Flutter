@@ -1,3 +1,7 @@
+import 'package:crypto_t/apis/session.dart';
+import 'package:crypto_t/models/crypto_asset.dart';
+import 'package:crypto_t/pages/crypto_cell_view.dart';
+import 'package:crypto_t/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class CryptosPage extends StatefulWidget {
@@ -6,8 +10,31 @@ class CryptosPage extends StatefulWidget {
 }
 
 class _CryptosPageState extends State<CryptosPage> {
+
+  List<CryptoAsset> _assets = Session.shared.getLocalAssets() ?? [];
+
   @override
   Widget build(BuildContext context) {
-    return Text("Cryptos");
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        AppStylesPrimary.safeAreaX, 
+        0,
+        AppStylesPrimary.safeAreaX, 
+        0,
+      ),
+      child: GridView.count(
+        // Create a grid with 2 columns. If you change the scrollDirection to
+        // horizontal, this produces 2 rows.
+        crossAxisCount: 3,
+        // Generate 100 widgets that display their index in the List.
+        children: List.generate(_assets.length, (index) {
+          var item = _assets[index];
+
+          return Center(
+            child: CryptoCell(asset: item),
+          );
+        }),
+      ),
+    );
   }
 }

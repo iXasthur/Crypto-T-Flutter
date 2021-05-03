@@ -25,14 +25,15 @@ class _AuthScaffoldState extends State<AuthScaffold> {
     super.initState();
 
     Future(() {
-      Navigator.pushReplacementNamed(context, AppRoutes.home);
-      // Session.shared.restore((error) {
-      //   if (error == null) {
-      //     Navigator.pushReplacementNamed(context, AppRoutes.home);
-      //   } else {
-      //     print(error);
-      //   }
-      // });
+      var email = _emailController.text.trim();
+      var password = _passwordController.text.trim();
+      Session.shared.signInEmail(email, password, (error) {
+        if (error == null) {
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+        } else {
+          print(error);
+        }
+      });
     });
   }
 
