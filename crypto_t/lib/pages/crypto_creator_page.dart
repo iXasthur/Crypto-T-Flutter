@@ -16,9 +16,8 @@ import 'package:video_player/video_player.dart';
 
 class CryptoCreator extends StatefulWidget {
   final CryptoAsset? asset;
-  final Function? onCompleted;
 
-  const CryptoCreator({Key? key, this.asset, this.onCompleted}) : super(key: key);
+  const CryptoCreator({Key? key, this.asset}) : super(key: key);
 
   @override
   _CryptoCreatorState createState() => _CryptoCreatorState();
@@ -102,9 +101,6 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                 
                 Session.shared.updateRemoteAsset(newAsset, _imageUri, _videoUri, (error) {
                   if (error == null) {
-                    if (widget.onCompleted != null) {
-                      widget.onCompleted!();
-                    }
                     Navigator.pop(context);
                   } else {
                     print(error);

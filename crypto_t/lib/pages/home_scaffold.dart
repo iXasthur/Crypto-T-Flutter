@@ -35,16 +35,12 @@ class _HomeScaffoldState extends State<HomeScaffold> {
         actions: _selectedIndex == 0
         ? [
         IconButton(
-          onPressed: () {
+          onPressed: () async {
             // Go to creator
-            Navigator.pushNamed(context, AppRoutes.creator, arguments: [
-              null,
-              () {
-                setState(() {
-                  _widgetOptions[0] = CryptosPage(); // Force to refresh
-                });
-              },
-            ]);
+            await Navigator.pushNamed(context, AppRoutes.creator, arguments: null);
+            setState(() {
+              _widgetOptions[0] = CryptosPage(); // Force to refresh
+            });
           },
           icon: Icon(CupertinoIcons.plus),
           splashColor: Colors.transparent,

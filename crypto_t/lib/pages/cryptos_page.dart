@@ -32,8 +32,9 @@ class _CryptosPageState extends State<CryptosPage> {
         return Padding(
           padding: EdgeInsets.all(2),
           child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.details, arguments: item.id);
+              onPressed: () async {
+                await Navigator.pushNamed(context, AppRoutes.details, arguments: item.id);
+                setState(() {});
               },
               style: ElevatedButton.styleFrom(
                 primary: Theme.of(context).scaffoldBackgroundColor, // background

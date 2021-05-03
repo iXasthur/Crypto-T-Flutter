@@ -68,13 +68,9 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
           onBack: () {},
           actions: [
             IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.creator, arguments: [
-                  asset,
-                      () {
-                    setState(() {});
-                  },
-                ]);
+              onPressed: () async {
+                await Navigator.pushNamed(context, AppRoutes.creator, arguments: asset);
+                setState(() {});
               },
               icon: Icon(CupertinoIcons.pencil),
               splashColor: Colors.transparent,
