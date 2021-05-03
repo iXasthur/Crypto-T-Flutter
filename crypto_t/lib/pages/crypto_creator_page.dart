@@ -3,6 +3,7 @@ import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:crypto_t/utils/widget/my_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CryptoCreator extends StatefulWidget {
@@ -39,7 +40,16 @@ class _CryptoCreatorState extends State<CryptoCreator> {
         title: "New Crypto",
         onBack: () {
 
-        }
+        },
+        actions: [
+          IconButton(
+            onPressed: () {
+
+            },
+            icon: Icon(CupertinoIcons.checkmark_alt),
+            splashColor: Colors.transparent,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
