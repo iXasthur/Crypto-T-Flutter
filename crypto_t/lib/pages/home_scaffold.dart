@@ -1,4 +1,5 @@
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -57,16 +58,17 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 tabs: [
                   GButton(
-                    icon: Icons.person,
+                    icon: CupertinoIcons.cube,
                     backgroundColor: Colors.orange,
                     text: tabs[0],
                   ),
                   GButton(
-                    icon: Icons.add,
+                    icon: Icons.map,
                     text: tabs[1],
                   ),
                   GButton(
-                    icon: Icons.school,
+                    icon: Icons.settings,
+                    backgroundColor: Colors.green,
                     text: tabs[2],
                   ),
                 ],

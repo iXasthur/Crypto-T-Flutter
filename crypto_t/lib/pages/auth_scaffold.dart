@@ -1,4 +1,5 @@
 import 'package:crypto_t/apis/session.dart';
+import 'package:crypto_t/pages/app_routes.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
@@ -22,6 +23,17 @@ class _AuthScaffoldState extends State<AuthScaffold> {
     _emailController.text = "api@example.com";
     _passwordController.text = "123456";
     super.initState();
+
+    Future(() {
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
+      // Session.shared.restore((error) {
+      //   if (error == null) {
+      //     Navigator.pushReplacementNamed(context, AppRoutes.home);
+      //   } else {
+      //     print(error);
+      //   }
+      // });
+    });
   }
 
   @override
@@ -92,7 +104,11 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                           var email = _emailController.text.trim();
                           var password = _passwordController.text.trim();
                           Session.shared.signInEmail(email, password, (error) {
-                            print(error);
+                            if (error == null) {
+                              Navigator.pushReplacementNamed(context, AppRoutes.home);
+                            } else {
+                              print(error);
+                            }
                           });
                         }
                         : null,
@@ -106,7 +122,11 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                           var email = _emailController.text.trim();
                           var password = _passwordController.text.trim();
                           Session.shared.signUpEmail(email, password, (error) {
-                            print(error);
+                            if (error == null) {
+                              Navigator.pushReplacementNamed(context, AppRoutes.home);
+                            } else {
+                              print(error);
+                            }
                           });
                         }
                         : null,
