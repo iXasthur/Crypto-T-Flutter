@@ -129,7 +129,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
 
         },
         actions: widget.asset != null
-        ? [_deleteButton(), _saveButton()] 
+        ? [_deleteButton(), _saveButton()]
         : [_saveButton()],
       ),
       body: SingleChildScrollView(
