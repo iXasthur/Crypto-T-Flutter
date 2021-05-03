@@ -31,6 +31,9 @@ class _HomeScaffoldState extends State<HomeScaffold> {
       appBar: MyAppBar.create(
         context,
         title: titles[_selectedIndex],
+        actions: [IconButton(onPressed: () {
+          
+        }, icon: Icon(CupertinoIcons.plus))],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: Container(
