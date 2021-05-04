@@ -6,6 +6,7 @@ import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HomeScaffold extends StatefulWidget {
   HomeScaffold({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
     return Scaffold(
       appBar: MyAppBar.create(
         context,
-        title: titles[_selectedIndex],
+        title: titles[_selectedIndex].tr(),
         actions: _selectedIndex == 0
         ? [
         IconButton(
@@ -79,16 +80,16 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                   GButton(
                     icon: CupertinoIcons.cube,
                     backgroundColor: Colors.orange,
-                    text: tabs[0],
+                    text: tabs[0].tr(),
                   ),
                   GButton(
                     icon: Icons.map,
-                    text: tabs[1],
+                    text: tabs[1].tr(),
                   ),
                   GButton(
                     icon: Icons.settings,
                     backgroundColor: Colors.green,
-                    text: tabs[2],
+                    text: tabs[2].tr(),
                   ),
                 ],
                 selectedIndex: _selectedIndex,

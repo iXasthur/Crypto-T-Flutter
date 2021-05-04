@@ -6,6 +6,7 @@ import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:crypto_t/utils/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AuthScaffold extends StatefulWidget {
   AuthScaffold({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
     return Scaffold(
       appBar: MyAppBar.create(
         context,
-        title: "Authorization",
+        title: "Authorization".tr(),
       ),
       body: SafeArea(
         child: Padding(
@@ -72,7 +73,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Welcome!',
+                'Welcome!'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -82,7 +83,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
               MyTextField.create(
                 context,
                 _emailController,
-                hint: 'Email',
+                hint: 'Email'.tr(),
                 onChanged: (s) {
                   setState(() {});
                 },
@@ -91,7 +92,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
               MyTextField.create(
                 context,
                 _passwordController,
-                hint: 'Password',
+                hint: 'Password'.tr(),
                 onChanged: (s) {
                   setState(() {});
                 },
@@ -101,7 +102,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                 children: [
                   MyButton.create(
                     context,
-                    title: 'Sign In',
+                    title: 'Sign In'.tr(),
                     onTap: validateInput()
                         ? () {
                           var email = _emailController.text.trim();
@@ -122,7 +123,7 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                   SizedBox(width: 15),
                   MyButton.create(
                     context,
-                    title: 'Sign Up',
+                    title: 'Sign Up'.tr(),
                     onTap: validateInput()
                         ? () {
                           var email = _emailController.text.trim();

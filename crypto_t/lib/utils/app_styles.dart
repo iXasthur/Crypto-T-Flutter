@@ -10,7 +10,7 @@ class AppStylesPrimary {
   static final ThemeData main = ThemeData(
     primarySwatch: Colors.purple,
     brightness: Brightness.light,
-    textTheme: GoogleFonts.quicksandTextTheme(
+    textTheme: GoogleFonts.rubikTextTheme(
         ThemeData(brightness: Brightness.light).textTheme
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -19,7 +19,7 @@ class AppStylesPrimary {
   static final ThemeData dark = ThemeData(
     primarySwatch: Colors.purple,
     brightness: Brightness.dark,
-    textTheme: GoogleFonts.quicksandTextTheme(
+    textTheme: GoogleFonts.rubikTextTheme(
         ThemeData(brightness: Brightness.dark).textTheme
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,

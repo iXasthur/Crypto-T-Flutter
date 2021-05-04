@@ -2,6 +2,7 @@ import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LocationPickerScaffold extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _LocationPickerScaffoldState extends State<LocationPickerScaffold> {
     return Scaffold(
       appBar: MyAppBar.createWithAutoBack(
         context,
-        title: "Pick Location",
+        title: "Pick Location".tr(),
         actions: [
           IconButton(
             onPressed: () async {

@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'app_routes.dart';
 
@@ -156,7 +157,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
     return Scaffold(
       appBar: MyAppBar.createWithAutoBack(
         context,
-        title: widget.asset == null ? "New Crypto" : "Edit Crypto",
+        title: widget.asset == null ? "New Crypto".tr() : "Edit Crypto".tr(),
         onBack: () {},
         actions: widget.asset != null
             ? [_deleteButton(), _saveButton()]
@@ -175,7 +176,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               Row(
                 children: [
                   Text(
-                    "Name",
+                    "Name".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -188,7 +189,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               MyTextField.create(
                 context,
                 _nameController,
-                hint: 'Name',
+                hint: 'Name'.tr(),
                 onChanged: (s) {
                   setState(() {});
                 },
@@ -197,7 +198,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               Row(
                 children: [
                   Text(
-                    "Code",
+                    "Code".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -210,7 +211,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               MyTextField.create(
                 context,
                 _codeController,
-                hint: 'Code',
+                hint: 'Code'.tr(),
                 onChanged: (s) {
                   setState(() {});
                 },
@@ -219,7 +220,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               Row(
                 children: [
                   Text(
-                    "Description",
+                    "Description".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -232,7 +233,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               MyTextField.create(
                 context,
                 _descriptionController,
-                hint: 'Description',
+                hint: 'Description'.tr(),
                 onChanged: (s) {
                   setState(() {});
                 },
@@ -241,7 +242,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               Row(
                 children: [
                   Text(
-                    "Icon",
+                    "Icon".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -280,7 +281,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                 children: [
                   MyButton.create(
                     context,
-                    title: 'Select Icon',
+                    title: 'Select Icon'.tr(),
                     onTap: () async {
                       final pickedFile = await _mediaPicker.getImage(
                           source: ImageSource.gallery);
@@ -296,7 +297,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                   SizedBox(width: 15),
                   MyButton.create(
                     context,
-                    title: 'Delete Icon',
+                    title: 'Delete Icon'.tr(),
                     onTap: () {
                       setState(() {
                         _imageUri = null;
@@ -309,7 +310,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               Row(
                 children: [
                   Text(
-                    "Video",
+                    "Video".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -368,7 +369,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                 children: [
                   MyButton.create(
                     context,
-                    title: 'Select Video',
+                    title: 'Select Video'.tr(),
                     onTap: () async {
                       final pickedFile = await _mediaPicker.getVideo(
                           source: ImageSource.gallery);
@@ -395,7 +396,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                   SizedBox(width: 15),
                   MyButton.create(
                     context,
-                    title: 'Delete Video',
+                    title: 'Delete Video'.tr(),
                     onTap: () {
                       setState(() {
                         _videoUri = null;
@@ -408,7 +409,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               Row(
                 children: [
                   Text(
-                    "Event",
+                    "Event".tr(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -425,7 +426,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Latitude',
+                              'Latitude'.tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
@@ -447,7 +448,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Longitude',
+                              'Longitude'.tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
@@ -468,7 +469,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                         MyTextField.create(
                           context,
                           _eventNoteController,
-                          hint: 'Note',
+                          hint: 'Note'.tr(),
                           onChanged: (s) {
                             setState(() {});
                           },
@@ -481,7 +482,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                 children: [
                   MyButton.create(
                     context,
-                    title: 'Pick Location',
+                    title: 'Pick Location _button'.tr(),
                     onTap: () async {
                       var result = await Navigator.pushNamed(
                           context, AppRoutes.location_picker);
@@ -495,7 +496,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                   SizedBox(width: 10),
                   MyButton.create(
                     context,
-                    title: 'Delete Event',
+                    title: 'Delete Event'.tr(),
                     onTap: () {
                       setState(() {
                         _eventNoteController.text = '';

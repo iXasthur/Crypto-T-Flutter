@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'app_routes.dart';
 
@@ -29,7 +30,7 @@ class _LoadingScaffoldState extends State<LoadingScaffold> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '| LOADING |',
+              '| LOADING |'.tr(),
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

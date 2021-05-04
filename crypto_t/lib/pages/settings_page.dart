@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               SizedBox(width: 10),
               Text(
-                'Theme',
+                'Theme'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -39,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               MyButton.create(
                 context,
-                title: 'Auto',
+                title: 'Auto'.tr(),
                 onTap: () {
                   AdaptiveTheme.of(context).setSystem();
                 }
@@ -47,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
               SizedBox(width: 15),
               MyButton.create(
                 context,
-                title: 'Light',
+                title: 'Light'.tr(),
                 onTap: () {
                   AdaptiveTheme.of(context).setLight();
                 }
@@ -55,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
               SizedBox(width: 15),
               MyButton.create(
                 context,
-                title: 'Dark',
+                title: 'Dark'.tr(),
                 onTap: () {
                   AdaptiveTheme.of(context).setDark();
                 }
@@ -68,7 +69,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               SizedBox(width: 10),
               Text(
-                'Language',
+                'Language'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -82,25 +83,37 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               MyButton.create(
                 context,
-                title: 'Auto',
+                title: 'Auto'.tr(),
                 onTap: () {
-                  
+                  var loc = EasyLocalization.of(context)?.deviceLocale.languageCode;
+                  switch (loc) {
+                    case 'en':
+                      EasyLocalization.of(context)?.setLocale(Locale('en'));
+                      break;
+                    case 'ru':
+                      EasyLocalization.of(context)?.setLocale(Locale('ru'));
+                      break;
+                    default:
+                      EasyLocalization.of(context)?.setLocale(Locale('en'));
+                      break;
+                  }
+                  EasyLocalization.of(context)?.deleteSaveLocale();
                 }
               ),
               SizedBox(width: 15),
               MyButton.create(
                 context,
-                title: 'English',
+                title: 'English'.tr(),
                 onTap: () {
-                  
+                  EasyLocalization.of(context)?.setLocale(Locale('en'));
                 }
               ),
               SizedBox(width: 15),
               MyButton.create(
                 context,
-                title: 'Russian',
+                title: 'Russian'.tr(),
                 onTap: () {
-                  
+                  EasyLocalization.of(context)?.setLocale(Locale('ru'));
                 }
               ),
             ],
@@ -111,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               SizedBox(width: 10),
               Text(
-                'Other',
+                'Other'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -124,7 +137,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(children: [
             MyButton.create(
                 context,
-                title: 'Sign Out',
+                title: 'Sign Out'.tr(),
                 onTap: () {
                   
                 }

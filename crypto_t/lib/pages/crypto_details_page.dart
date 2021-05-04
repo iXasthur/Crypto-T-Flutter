@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:video_player/video_player.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'app_routes.dart';
 
@@ -127,7 +128,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                   Row(
                     children: [
                       Text(
-                        "Description",
+                        "Description".tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -165,7 +166,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                   Row(
                     children: [
                       Text(
-                        "Video",
+                        "Video".tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -222,7 +223,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                   Row(
                     children: [
                       Text(
-                        "Event",
+                        "Event".tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -236,7 +237,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Latitude',
+                        'Latitude'.tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
@@ -258,7 +259,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Longitude',
+                        'Longitude'.tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
