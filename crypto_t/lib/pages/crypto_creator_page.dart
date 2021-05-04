@@ -65,7 +65,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
           ..setLooping(true)
           ..initialize().then((_) {
             // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-            Future.delayed(const Duration(milliseconds: 500), () {
+            Future.delayed(const Duration(milliseconds: 1000), () {
               setState(() {});
             });
           });
@@ -385,7 +385,7 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                               VideoPlayerController.file(File(pickedFile.path))
                                 ..setLooping(true)
                                 ..initialize().then((_) {
-                                  Future.delayed(const Duration(milliseconds: 500), () {
+                                  Future.delayed(const Duration(milliseconds: 1000), () {
                                     setState(() {
                                       oldVideoController?.dispose();
                                     });
