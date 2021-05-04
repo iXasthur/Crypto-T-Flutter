@@ -4,7 +4,6 @@ import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:crypto_t/utils/widget/my_text_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:easy_localization/easy_localization.dart';
