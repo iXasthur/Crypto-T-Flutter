@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_t/pages/app_routes.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,11 +17,17 @@ class MyApp extends StatelessWidget {
       onTap: () {
         WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
       },
-      child: MaterialApp(
-        title: AppStylesPrimary.title,
-        theme: AppStylesPrimary.main,
-        initialRoute: AppRoutes.root,
-        onGenerateRoute: AppRoutes.generateRoute,
+      child: AdaptiveTheme(
+        light: AppStylesPrimary.main,
+        dark: AppStylesPrimary.dark,
+        initial: AdaptiveThemeMode.light,
+        builder: (theme, darkTheme) => MaterialApp(
+          title: AppStylesPrimary.title,
+          theme: theme,
+          darkTheme: darkTheme,
+          initialRoute: AppRoutes.root,
+          onGenerateRoute: AppRoutes.generateRoute,
+        ),
       ),
     );
   }

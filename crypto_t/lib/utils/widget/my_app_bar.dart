@@ -13,7 +13,7 @@ class MyAppBar {
           title,
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1!.color,
-            fontFamily: GoogleFonts.quicksand().fontFamily,
+            fontFamily: Theme.of(context).textTheme.bodyText1!.fontFamily,
             fontWeight: FontWeight.bold,
             fontSize: 22,
           ),

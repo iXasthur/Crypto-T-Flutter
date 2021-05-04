@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 context,
                 title: 'Auto',
                 onTap: () {
-                  
+                  AdaptiveTheme.of(context).setSystem();
                 }
               ),
               SizedBox(width: 15),
@@ -48,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 context,
                 title: 'Light',
                 onTap: () {
-                  
+                  AdaptiveTheme.of(context).setLight();
                 }
               ),
               SizedBox(width: 15),
@@ -56,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 context,
                 title: 'Dark',
                 onTap: () {
-                  
+                  AdaptiveTheme.of(context).setDark();
                 }
               ),
             ],

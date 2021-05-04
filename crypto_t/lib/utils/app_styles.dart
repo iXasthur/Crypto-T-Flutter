@@ -10,7 +10,18 @@ class AppStylesPrimary {
   static final ThemeData main = ThemeData(
     primarySwatch: Colors.purple,
     brightness: Brightness.light,
-    textTheme: GoogleFonts.quicksandTextTheme(),
+    textTheme: GoogleFonts.quicksandTextTheme(
+        ThemeData(brightness: Brightness.light).textTheme
+    ),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
+
+  static final ThemeData dark = ThemeData(
+    primarySwatch: Colors.purple,
+    brightness: Brightness.dark,
+    textTheme: GoogleFonts.quicksandTextTheme(
+        ThemeData(brightness: Brightness.dark).textTheme
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }
