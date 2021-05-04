@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,21 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _animationAssistant = AnimationAssistant(context);
     MyApp.globalAnimationAssistant = _animationAssistant;
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    var block = MyApp.globalAnimationAssistant?.getIsAnimating() ?? false;
+    if (block) {
+      print('Blocked back button');
+    }
+    return block;
   }
 
   @override
