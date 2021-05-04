@@ -23,7 +23,7 @@ class MyButton {
             style: TextStyle(
               fontSize: 17,
               color: Theme.of(context).textTheme.bodyText1!.color,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
             textAlign: textAlign,
           ),

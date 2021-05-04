@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -13,37 +14,46 @@ class LoadingScaffold extends StatefulWidget {
 
 class _LoadingScaffoldState extends State<LoadingScaffold> {
 
-  @override
-  void initState() {
-    super.initState();
-
-    Future(() {
-      Navigator.pushReplacementNamed(context, AppRoutes.auth);
-    });
-  }
+  bool _connected = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '| LOADING |'.tr(),
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.active) {
+            if (!_connected) {
+              _connected = true;
+              Future(() {
+                Navigator.pushReplacementNamed(context, AppRoutes.auth);
+              });
+            }
+          }
+
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '| LOADING |'.tr(),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 15),
+                SpinKitThreeBounce(
+                  color: Theme
+                      .of(context)
+                      .backgroundColor,
+                  size: 20.0,
+                ),
+              ],
             ),
-            SizedBox(height: 15),
-            SpinKitThreeBounce(
-              color: Theme.of(context).backgroundColor,
-              size: 20.0,
-            ),
-          ],
-        ),
-      ),
+          );
+        },
+      )
     );
   }
 }

@@ -1,8 +1,11 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:crypto_t/apis/session.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import 'app_routes.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -139,7 +142,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 context,
                 title: 'Sign Out'.tr(),
                 onTap: () {
-                  
+                  Session.shared.destroy(() {
+                    Navigator.pushReplacementNamed(context, AppRoutes.auth);
+                  });
                 }
               ),
             ],

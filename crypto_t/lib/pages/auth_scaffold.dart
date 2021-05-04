@@ -4,6 +4,7 @@ import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:crypto_t/utils/widget/my_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -24,20 +25,17 @@ class _AuthScaffoldState extends State<AuthScaffold> {
   void initState() {
     super.initState();
 
-    _emailController.text = "api@example.com";
-    _passwordController.text = "123456";
-
-    // Future(() {
-    //   var email = _emailController.text.trim();
-    //   var password = _passwordController.text.trim();
-    //   Session.shared.signInEmail(email, password, (error) {
-    //     if (error == null) {
-    //       Navigator.pushReplacementNamed(context, AppRoutes.home);
-    //     } else {
-    //       print(error);
-    //     }
-    //   });
-    // });
+    context.loaderOverlay.show();
+    Future(() {
+      Session.shared.restore((error) {
+        context.loaderOverlay.hide();
+        if (error == null) {
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+        } else {
+          print(error);
+        }
+      });
+    });
   }
 
   @override
