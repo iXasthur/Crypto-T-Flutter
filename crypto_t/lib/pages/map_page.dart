@@ -31,6 +31,9 @@ class _MapPageState extends State<MapPage> {
             snippet: event.note,
             onTap: () async {
               await Navigator.pushNamed(context, AppRoutes.details, arguments: asset.id);
+              setState(() {
+                updateMarkers();
+              });
             },
           ),
         );
