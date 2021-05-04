@@ -3,6 +3,7 @@ import 'package:crypto_t/pages/auth_scaffold.dart';
 import 'package:crypto_t/pages/crypto_creator_page.dart';
 import 'package:crypto_t/pages/crypto_details_page.dart';
 import 'package:crypto_t/pages/loading_scaffold.dart';
+import 'package:crypto_t/pages/location_picker_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,8 @@ class AppRoutes {
   static const String details = '/home/details';
 
   static const String creator = '/creator';
+
+  static const String location_picker = '/creator/location_picker';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -39,6 +42,8 @@ class AppRoutes {
           return MaterialPageRoute(builder: (_) => CryptoCreator(asset: args));
         }
         break;
+      case location_picker:
+        return MaterialPageRoute(builder: (_) => LocationPickerScaffold());
     }
 
     return _errorRoute();
