@@ -1,4 +1,5 @@
 import 'package:crypto_t/apis/session.dart';
+import 'package:crypto_t/main.dart';
 import 'package:crypto_t/pages/app_routes.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:crypto_t/utils/widget/my_app_bar.dart';
@@ -24,10 +25,10 @@ class _AuthScaffoldState extends State<AuthScaffold> {
   void initState() {
     super.initState();
 
-    context.loaderOverlay.show();
+    MyApp.globalAnimationAssistant?.startAnimation();
     Future(() {
       Session.shared.restore((error) {
-        context.loaderOverlay.hide();
+        MyApp.globalAnimationAssistant?.stopAnimation();
         if (error == null) {
           Navigator.pushReplacementNamed(context, AppRoutes.home);
         } else {
@@ -104,9 +105,9 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                         ? () {
                           var email = _emailController.text.trim();
                           var password = _passwordController.text.trim();
-                          context.loaderOverlay.show();
+                          MyApp.globalAnimationAssistant?.startAnimation();
                           Session.shared.signInEmail(email, password, (error) {
-                            context.loaderOverlay.hide();
+                            MyApp.globalAnimationAssistant?.stopAnimation();
                             if (error == null) {
                               Navigator.pushReplacementNamed(context, AppRoutes.home);
                             } else {
@@ -125,10 +126,10 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                         ? () {
                           var email = _emailController.text.trim();
                           var password = _passwordController.text.trim();
-                          context.loaderOverlay.show();
+                          MyApp.globalAnimationAssistant?.startAnimation();
                           Session.shared.signUpEmail(email, password, (error) {
                             if (error == null) {
-                              context.loaderOverlay.hide();
+                              MyApp.globalAnimationAssistant?.stopAnimation();
                               Navigator.pushReplacementNamed(context, AppRoutes.home);
                             } else {
                               print(error);

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crypto_t/apis/session.dart';
+import 'package:crypto_t/main.dart';
 import 'package:crypto_t/models/crypto_asset.dart';
 import 'package:crypto_t/models/crypto_event.dart';
 import 'package:crypto_t/utils/app_styles.dart';
@@ -91,9 +92,9 @@ class _CryptoCreatorState extends State<CryptoCreator> {
 
   Widget _deleteButton() => IconButton(
         onPressed: () {
-          context.loaderOverlay.show();
+          MyApp.globalAnimationAssistant?.startAnimation();
           Session.shared.deleteRemoteAsset(widget.asset!, (error) {
-            context.loaderOverlay.hide();
+            MyApp.globalAnimationAssistant?.stopAnimation();
             if (error == null) {
               Navigator.pop(context);
               Navigator.pop(context);
@@ -134,10 +135,10 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               event,
             );
 
-            context.loaderOverlay.show();
+            MyApp.globalAnimationAssistant?.startAnimation();
             Session.shared.updateRemoteAsset(newAsset, _imageUri, _videoUri,
                 (error) {
-                  context.loaderOverlay.hide();
+                  MyApp.globalAnimationAssistant?.stopAnimation();
               if (error == null) {
                 Navigator.pop(context);
               } else {

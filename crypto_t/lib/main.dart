@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_t/pages/app_routes.dart';
+import 'package:crypto_t/utils/animation_assistant.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +22,25 @@ Future<void> main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+  static AnimationAssistant? globalAnimationAssistant;
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  late AnimationAssistant _animationAssistant;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationAssistant = AnimationAssistant(context);
+    MyApp.globalAnimationAssistant = _animationAssistant;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,15 +52,25 @@ class MyApp extends StatelessWidget {
         dark: AppStylesPrimary.dark,
         initial: AdaptiveThemeMode.light,
         builder: (theme, darkTheme) => GlobalLoaderOverlay(
-          child: MaterialApp(
-            title: AppStylesPrimary.title,
-            theme: theme,
-            darkTheme: darkTheme,
-            initialRoute: AppRoutes.root,
-            onGenerateRoute: AppRoutes.generateRoute,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+          child: StreamBuilder<bool>(
+            initialData: false,
+            stream: _animationAssistant.stream,
+            builder: (context, snapshot) {
+              var absorb = snapshot.data ?? false;
+              return AbsorbPointer(
+                absorbing: absorb,
+                child: MaterialApp(
+                  title: AppStylesPrimary.title,
+                  theme: theme,
+                  darkTheme: darkTheme,
+                  initialRoute: AppRoutes.root,
+                  onGenerateRoute: AppRoutes.generateRoute,
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                ),
+              );
+            }
           ),
         ),
       ),
