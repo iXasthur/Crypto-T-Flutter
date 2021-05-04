@@ -39,6 +39,7 @@ dependencies:
   video_player: ^2.1.1
   image_picker: ^0.7.4
   adaptive_theme: ^2.2.0
+  google_maps_flutter: ^2.0.3
 
 dev_dependencies:
   flutter_test:

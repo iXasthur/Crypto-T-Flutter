@@ -75,3 +75,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux
 crypto_t/android/app/google-services.json
 crypto_t/ios/Runner/GoogleService-Info.plist
+crypto_t/android/app/src/main/res/values/secrets.xml
