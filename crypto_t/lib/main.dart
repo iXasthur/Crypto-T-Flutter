@@ -76,6 +76,7 @@ class _MyAppState extends State<MyApp> {
               return AbsorbPointer(
                 absorbing: absorb,
                 child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
                   title: AppStylesPrimary.title,
                   theme: theme,
                   darkTheme: darkTheme,
