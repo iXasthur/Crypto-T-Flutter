@@ -29,7 +29,7 @@ class MyTextField {
                 color: Theme.of(context).textTheme.bodyText1!.color,
               ),
               controller: controller,
-              textCapitalization: TextCapitalization.sentences,
+              // textCapitalization: TextCapitalization.sentences,
               onChanged: (s) {
                 onChanged.call(s);
               },

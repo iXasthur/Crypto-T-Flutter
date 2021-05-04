@@ -8,6 +8,7 @@ import 'package:crypto_t/utils/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthScaffold extends StatefulWidget {
   AuthScaffold({Key? key}) : super(key: key);
@@ -24,6 +25,9 @@ class _AuthScaffoldState extends State<AuthScaffold> {
   @override
   void initState() {
     super.initState();
+
+    // _emailController.text = "api@example.com";
+    // _passwordController.text = "123456";
 
     MyApp.globalAnimationAssistant?.startAnimation();
     Future(() {
@@ -112,6 +116,11 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                               Navigator.pushReplacementNamed(context, AppRoutes.home);
                             } else {
                               print(error);
+                              Fluttertoast.cancel();
+                              Fluttertoast.showToast(
+                                  msg: "Something Went Wrong",
+                                  toastLength: Toast.LENGTH_SHORT,
+                              );
                             }
                           }
                           );
@@ -128,11 +137,16 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                           var password = _passwordController.text.trim();
                           MyApp.globalAnimationAssistant?.startAnimation();
                           Session.shared.signUpEmail(email, password, (error) {
+                            MyApp.globalAnimationAssistant?.stopAnimation();
                             if (error == null) {
-                              MyApp.globalAnimationAssistant?.stopAnimation();
                               Navigator.pushReplacementNamed(context, AppRoutes.home);
                             } else {
                               print(error);
+                              Fluttertoast.cancel();
+                              Fluttertoast.showToast(
+                                  msg: "Something Went Wrong",
+                                  toastLength: Toast.LENGTH_SHORT,
+                              );
                             }
                           });
                         }
