@@ -5,6 +5,7 @@ import 'package:crypto_t/utils/widget/my_app_bar.dart';
 import 'package:crypto_t/utils/widget/my_button.dart';
 import 'package:crypto_t/utils/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class AuthScaffold extends StatefulWidget {
   AuthScaffold({Key? key}) : super(key: key);
@@ -25,17 +26,17 @@ class _AuthScaffoldState extends State<AuthScaffold> {
     _emailController.text = "api@example.com";
     _passwordController.text = "123456";
 
-    Future(() {
-      var email = _emailController.text.trim();
-      var password = _passwordController.text.trim();
-      Session.shared.signInEmail(email, password, (error) {
-        if (error == null) {
-          Navigator.pushReplacementNamed(context, AppRoutes.home);
-        } else {
-          print(error);
-        }
-      });
-    });
+    // Future(() {
+    //   var email = _emailController.text.trim();
+    //   var password = _passwordController.text.trim();
+    //   Session.shared.signInEmail(email, password, (error) {
+    //     if (error == null) {
+    //       Navigator.pushReplacementNamed(context, AppRoutes.home);
+    //     } else {
+    //       print(error);
+    //     }
+    //   });
+    // });
   }
 
   @override
@@ -105,13 +106,16 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                         ? () {
                           var email = _emailController.text.trim();
                           var password = _passwordController.text.trim();
+                          context.loaderOverlay.show();
                           Session.shared.signInEmail(email, password, (error) {
+                            context.loaderOverlay.hide();
                             if (error == null) {
                               Navigator.pushReplacementNamed(context, AppRoutes.home);
                             } else {
                               print(error);
                             }
-                          });
+                          }
+                          );
                         }
                         : null,
                   ),
@@ -123,8 +127,10 @@ class _AuthScaffoldState extends State<AuthScaffold> {
                         ? () {
                           var email = _emailController.text.trim();
                           var password = _passwordController.text.trim();
+                          context.loaderOverlay.show();
                           Session.shared.signUpEmail(email, password, (error) {
                             if (error == null) {
+                              context.loaderOverlay.hide();
                               Navigator.pushReplacementNamed(context, AppRoutes.home);
                             } else {
                               print(error);

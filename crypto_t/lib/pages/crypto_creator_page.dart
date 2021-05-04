@@ -15,6 +15,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import 'app_routes.dart';
 
@@ -89,7 +90,9 @@ class _CryptoCreatorState extends State<CryptoCreator> {
 
   Widget _deleteButton() => IconButton(
         onPressed: () {
+          context.loaderOverlay.show();
           Session.shared.deleteRemoteAsset(widget.asset!, (error) {
+            context.loaderOverlay.hide();
             if (error == null) {
               Navigator.pop(context);
               Navigator.pop(context);
@@ -130,8 +133,10 @@ class _CryptoCreatorState extends State<CryptoCreator> {
               event,
             );
 
+            context.loaderOverlay.show();
             Session.shared.updateRemoteAsset(newAsset, _imageUri, _videoUri,
                 (error) {
+                  context.loaderOverlay.hide();
               if (error == null) {
                 Navigator.pop(context);
               } else {

@@ -3,6 +3,7 @@ import 'package:crypto_t/pages/app_routes.dart';
 import 'package:crypto_t/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,12 +22,14 @@ class MyApp extends StatelessWidget {
         light: AppStylesPrimary.main,
         dark: AppStylesPrimary.dark,
         initial: AdaptiveThemeMode.light,
-        builder: (theme, darkTheme) => MaterialApp(
-          title: AppStylesPrimary.title,
-          theme: theme,
-          darkTheme: darkTheme,
-          initialRoute: AppRoutes.root,
-          onGenerateRoute: AppRoutes.generateRoute,
+        builder: (theme, darkTheme) => GlobalLoaderOverlay(
+          child: MaterialApp(
+            title: AppStylesPrimary.title,
+            theme: theme,
+            darkTheme: darkTheme,
+            initialRoute: AppRoutes.root,
+            onGenerateRoute: AppRoutes.generateRoute,
+          ),
         ),
       ),
     );
