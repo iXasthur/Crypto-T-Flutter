@@ -65,7 +65,9 @@ class _CryptoCreatorState extends State<CryptoCreator> {
           ..setLooping(true)
           ..initialize().then((_) {
             // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-            setState(() {});
+            Future.delayed(const Duration(milliseconds: 500), () {
+              setState(() {});
+            });
           });
       }
 
@@ -383,9 +385,10 @@ class _CryptoCreatorState extends State<CryptoCreator> {
                               VideoPlayerController.file(File(pickedFile.path))
                                 ..setLooping(true)
                                 ..initialize().then((_) {
-                                  // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-                                  setState(() {
-                                    oldVideoController?.dispose();
+                                  Future.delayed(const Duration(milliseconds: 500), () {
+                                    setState(() {
+                                      oldVideoController?.dispose();
+                                    });
                                   });
                                 });
                         } else {

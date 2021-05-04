@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       child: AdaptiveTheme(
         light: AppStylesPrimary.main,
         dark: AppStylesPrimary.dark,
-        initial: AdaptiveThemeMode.light,
+        initial: AdaptiveThemeMode.system,
         builder: (theme, darkTheme) => GlobalLoaderOverlay(
           child: StreamBuilder<bool>(
             initialData: false,
